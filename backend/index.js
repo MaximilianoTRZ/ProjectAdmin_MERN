@@ -2,13 +2,27 @@
 // Commonjs
 // const express = require("express")
 
-//ESM misma sintaxis que Js del cliente con import y export.
+//ESModules misma sintaxis que Js del cliente con import y export.
 import express from "express";
+import dotenv from "dotenv"; //variables de entorno para ocultar credenciales
+import conectarDB from "./config/db.js";
+import usuarioRoutes from "./routes/usuarioRoutes.js";
 
 const app = express()
+app.use(express.json())
 
-console.log("App Reiniciada..")
+dotenv.config()
 
-app.listen(4000, () => {
-    console.log("Servidor corriendo en el puerto 4000")
+conectarDB()
+
+//Routing
+app.use("/api/usuarios", usuarioRoutes) //con use podemos usar cualquiera de los 4 verbos (get,post,put,delete) 
+
+
+
+const PORT = process.env.PORT || 4000
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`)
 })
+
