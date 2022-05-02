@@ -43,6 +43,12 @@ usuarioSchema.pre("save", async function(next) {
     //estar atento a las librerias de hasheo porque dejan de dar soporte al hasheo
 })
 
+//comprueba el password que el usuario ingresa al formlario y lo compara con el password
+// de la instancia actual de usuario.
+usuarioSchema.methods.comprobarPassword = async function (passwordFormulario) {
+    return await bcrypt.compare(passwordFormulario, this.password)
+}
+
 const Usuario = mongoose.model("Usuario",usuarioSchema)
 
 export default Usuario;

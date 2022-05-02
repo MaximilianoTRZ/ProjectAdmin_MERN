@@ -2,7 +2,7 @@
 
 import Usuario from "../models/Usuario.js" //importamos el schema de usuario
 import generarId from "../helpers/generarId.js" //importamos el generador del id
-
+import generarJWT from "../helpers/generarJWT.js" //importamos el generador del jwt
 
 //crea un nuevo usuario
 const registrar = async (req, res) => {
@@ -35,8 +35,35 @@ const registrar = async (req, res) => {
 
 // autenticar los usuarios
 // se coloca el async porque vamos a interactuar con la bdd
-const autenticar = async () => {
+const autenticar = async (req, res) => {
     
+    const {email, password}= req.body
+    
+    //comprobar si el usuario existe
+    const usuario = await Usuario.findOne({email})
+    if(!usuario){
+        const error = new Error("El usuario no existe")
+        return res.status(404).json({msg: error.message})
+    }
+
+    //comprobar si el usuario esta confirmado
+    if (!usuario.confirmado) {
+        const error = new Error("tu cuenta no ha sido confirmada.")
+        return res.status(403).json({msg: error.message})
+    }
+
+    //comprobar su password
+    if (await usuario.comprobarPassword(password)) {
+        res.json({
+            _id: usuario._id,
+            nombre: usuario.nombre,
+            email: usuario.email,
+            token: generarJWT(usuario._id)
+        })
+    } else {
+        const error = new Error("El password es incorrecto.")
+        return res.status(403).json({msg: error.message})
+    }
 }
 
 
