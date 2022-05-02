@@ -1,7 +1,7 @@
 //Archivo Controlador de el routing de usuarios.
 
 import Usuario from "../models/Usuario.js" //importamos el schema de usuario
-import generarId from "../helpers/generarid.js" //importamos el generador del id
+import generarId from "../helpers/generarId.js" //importamos el generador del id
 
 
 //crea un nuevo usuario

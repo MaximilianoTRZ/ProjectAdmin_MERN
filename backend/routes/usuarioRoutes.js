@@ -5,7 +5,7 @@ import { registrar, autenticar } from "../controllers/usuarioController.js";
 
 //pa que no salga el cannot get :v
 router.get("/", (res,req) =>{
-    req.send("En proceso :D")
+    req.send("<h1>En proceso :D</h1>")
 })
 
 // Autenticacion, registro y confirmacion de usuarios
