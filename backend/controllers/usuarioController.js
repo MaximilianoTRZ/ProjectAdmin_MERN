@@ -4,8 +4,13 @@ import Usuario from "../models/Usuario.js" //importamos el schema de usuario
 import generarId from "../helpers/generarId.js" //importamos el generador del id
 import generarJWT from "../helpers/generarJWT.js" //importamos el generador del jwt
 
+// ruta raiz de usuario
+const homeUsuario =  (res,req) =>{
+    req.json({msg: "Ruta raiz de usuarios GET /api/usuarios/" })
+}
+
 //crea un nuevo usuario
-const registrar = async (req, res) => {
+const registrarUsuario = async (req, res) => {
 
     //Evitar registros duplicados
     const {email} = req.body //destructuring
@@ -35,7 +40,7 @@ const registrar = async (req, res) => {
 
 // autenticar los usuarios
 // se coloca el async porque vamos a interactuar con la bdd
-const autenticar = async (req, res) => {
+const autenticarUsuario = async (req, res) => {
     
     const {email, password}= req.body
     
@@ -70,6 +75,7 @@ const autenticar = async (req, res) => {
 
 
 export {
-    registrar,
-    autenticar
+    homeUsuario,
+    registrarUsuario,
+    autenticarUsuario
 }

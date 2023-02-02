@@ -1,8 +1,9 @@
-// Contiene la configuracion del server
+// Este archivo contiene la configuracion del server
+
 // Commonjs
 // const express = require("express")
 
-//ESModules misma sintaxis que Js del cliente con import y export.
+//ESModules - misma sintaxis que Js del cliente con import y export.
 import express from "express";
 import dotenv from "dotenv"; //variables de entorno para ocultar credenciales
 import conectarDB from "./config/db.js";
@@ -16,7 +17,8 @@ dotenv.config()
 conectarDB()
 
 //Routing
-app.use("/api/usuarios", usuarioRoutes) //con use podemos usar cualquiera de los 4 verbos (get,post,put,delete) 
+//registramos las rutas
+app.use("/api/usuarios", usuarioRoutes) //con 'use' podemos usar cualquiera de los 4 verbos (get,post,put,delete) 
 
 
 

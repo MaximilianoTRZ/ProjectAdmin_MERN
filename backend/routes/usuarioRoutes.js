@@ -1,15 +1,14 @@
 import express from "express";
+
 const router = express.Router()
 
-import { registrar, autenticar } from "../controllers/usuarioController.js";
+import { homeUsuario, registrarUsuario, autenticarUsuario } from "../controllers/usuarioController.js";
 
-//pa que no salga el cannot get :v
-router.get("/", (res,req) =>{
-    req.send("<h1>En proceso :D</h1>")
-})
+//ruta raiz provisoria para que no salga el cannot get
+router.get("/", homeUsuario)
 
-// Autenticacion, registro y confirmacion de usuarios
-router.post("/", registrar) //crea un nuevo usuario.
-router.post("/login", autenticar) //autenticacion de usuarios
+// LLama a Controllers de Autenticacion, registro y confirmacion de usuarios
+router.post("/", registrarUsuario) // crea un nuevo usuario
+router.post("/login", autenticarUsuario) // autenticacion de usuarios
 
 export default router;
