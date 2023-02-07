@@ -21,16 +21,15 @@ const checkAuth = async (req, res, next) => {
 
         } catch (error) {
             return res.status(404).json({msg:"Error in the Auth Middleware."})
-            
         }
     }
 
     if (!token) {
         const error = new Error("Invalid token.")
-        res.status(401).json({ msg: error.message })
+        return res.status(401).json({ msg: error.message })
     }
 
-    next()
+    next();
 }
 
 export default checkAuth;

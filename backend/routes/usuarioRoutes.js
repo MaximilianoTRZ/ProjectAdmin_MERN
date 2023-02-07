@@ -16,7 +16,7 @@ import {
 import checkAuth from "../middlewares/checkAuth.js";
 
 
-//ruta raiz provisoria para que no salga el cannot get
+//ruta raiz provisoria
 router.get("/", homeUsuario)
 
 // LLama a Controllers de Autenticacion, registro y confirmacion de usuarios

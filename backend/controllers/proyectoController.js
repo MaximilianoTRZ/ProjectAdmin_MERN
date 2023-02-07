@@ -1,17 +1,31 @@
 //Archivo Controlador de el routing de Proyectos.
 
-import Proyectos from "../models/Proyectos.js" //importamos el schema de usuario
+import Proyecto from "../models/Proyecto.js" //importamos el schema de usuario
 
-// ruta raiz de Proyectos
-const homeProyectos =  (res,req) =>{
-    req.json({msg: "Ruta raiz de Proyectos GET /api/proyectos/" })
+
+// crea un proyecto
+const nuevoProyecto = async (req, res) => { 
+
+    const nuevoProyecto = new Proyecto(req.body)
+    nuevoProyecto.creador = req.usuario._id // Le asignamos el usuario autenticado como creador del proyecto
+    
+    try {
+       const proyectoGuardado = await nuevoProyecto.save() // guardamos en la DB
+        return res.status(200).json(proyectoGuardado)   
+    } catch (error) {
+        return res.status(403).json({msg: error.message})
+    }
+    
 }
 
 // trae los proyectos del usuario autenticado
-const obtenerProyectos = async (req, res) => { }
+const obtenerProyectos = async (req, res) => { 
 
-// crea un proyecto
-const nuevoProyecto = async (req, res) => { }
+    console.log('desde obtener proyectos')
+
+    // req.proyectos = await Proyectos.findAll()
+    // res.status(200).json(req.proyectos)
+}
 
 // obtiene un proyecto por id del usuario autenticado 
 const obtenerProyecto = async (req, res) => { }
@@ -32,4 +46,12 @@ const eliminarColaborador = async (req, res) => { }
 const obtenerTareas = async (req, res) => { }
 
 export {
+    obtenerProyectos,
+    nuevoProyecto,
+    obtenerProyecto,
+    editarProyecto,
+    eliminarProyecto,
+    agregarColaborador,
+    eliminarColaborador,
+    obtenerTareas,
 }

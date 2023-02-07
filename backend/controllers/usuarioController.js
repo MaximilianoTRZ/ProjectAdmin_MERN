@@ -94,7 +94,7 @@ const confirmarUsuario = async (req, res) => {
         await usuarioConfirmar.save()
         res.json({ msg : "User confirmed succesfully."})
     } catch (error) {
-        console.log(error)
+        return res.status(403).json({msg: error.message})
     }
 }
 
