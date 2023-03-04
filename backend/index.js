@@ -7,8 +7,11 @@
 import express from "express";
 import dotenv from "dotenv"; //variables de entorno para ocultar credenciales
 import conectarDB from "./config/db.js";
+
+//Rutas
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import proyectoRoutes from "./routes/proyectoRoutes.js";
+import tareaRoutes from "./routes/tareaRoutes.js";
 
 
 const app = express()
@@ -22,6 +25,7 @@ conectarDB()
 //con 'use' podemos usar cualquiera de los 4 verbos (get,post,put,delete) 
 app.use("/api/usuarios", usuarioRoutes) 
 app.use("/api/proyectos", proyectoRoutes)
+app.use("/api/tareas", tareaRoutes)
 
 
 const PORT = process.env.PORT || 4000

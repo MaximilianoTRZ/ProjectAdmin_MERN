@@ -1,38 +1,31 @@
-//Archivo Controlador de el routing de Proyectos.
-
-import Proyecto from "../models/Proyecto.js" //importamos el schema de usuario
+//Archivo Controlador del routing de Proyectos.
+import Proyecto from "../models/Proyecto.js" //importamos el schema de proyecto
+import Tarea from "../models/Tarea.js" //importamos el schema de tarea
 
 
 // crea un proyecto
 const nuevoProyecto = async (req, res) => { 
-
     const nuevoProyecto = new Proyecto(req.body)
     nuevoProyecto.creador = req.usuario._id // Le asignamos el usuario autenticado como creador del proyecto
-
     try {
        const proyectoGuardado = await nuevoProyecto.save() // guardamos en la DB
         return res.status(200).json(proyectoGuardado)   
     } catch (error) {
         return res.status(403).json({msg: error.message})
     }
-    
 }
 
 // trae los proyectos del usuario autenticado
 const obtenerProyectos = async (req, res) => {
-
     //traemos los proyectos que pertenecen al usuario autenticado
     const proyectos = await Proyecto.find().where('creador').equals(req.usuario) 
     return res.status(200).json(proyectos)
-    
 }
 
 // obtiene un proyecto por id del usuario autenticado 
 const obtenerProyecto = async (req, res) => {
-    
     // tomamos el id del routing dinamico
     const { id } = req.params
-
     try {
         //traemos un proyecto que pertenecen al usuario autenticado
         const proyectoObtenido = await Proyecto.findById(id) //.where('creador').equals(req.usuario) 
@@ -47,9 +40,14 @@ const obtenerProyecto = async (req, res) => {
             return res.status(401).json({ msg: error.message })
         }
 
-        // response con el proyecto
-        return res.status(200).json(proyectoObtenido)
-        
+        //Obtener las tareas del proyecto
+        const tareas = await Tarea.find().where("proyecto").equals(proyecto._id)
+
+        // response con el proyecto y sus tareas 
+        res.status(200).json({
+            proyectoObtenido, 
+            tareas
+        })
     } catch (error) {
         return res.status(404).json({ msg: 'Proyecto no encontrado.' })
     }
@@ -58,10 +56,8 @@ const obtenerProyecto = async (req, res) => {
 
 // editar los datos del proyecto
 const editarProyecto = async (req, res) => {
-
     const { id } = req.params
     try {
-
         const proyectoObtenido = await Proyecto.findById(id) 
 
         if (proyectoObtenido.creador.toString() !== req.usuario._id.toString()) {
@@ -76,7 +72,6 @@ const editarProyecto = async (req, res) => {
 
         const proyectoAlmacenado = await proyectoObtenido.save()
         return res.status(200).json(proyectoAlmacenado)
-    
     } catch (error) {
         return res.status(404).json({ msg: error.message })
     }
@@ -84,7 +79,6 @@ const editarProyecto = async (req, res) => {
 
 // elimina un proyecto existente
 const eliminarProyecto = async (req, res) => {
-    
     const { id } = req.params
     try {
         const proyectoObtenido = await Proyecto.findById(id) 
@@ -100,7 +94,6 @@ const eliminarProyecto = async (req, res) => {
     } catch (error) {
         return res.status(404).json({ msg: 'Proyecto no encontrado.' })
     }
-
  }
 
 // agregar un colaborador existente al proyecto
@@ -108,9 +101,6 @@ const agregarColaborador = async (req, res) => { }
 
 // Quitar al colaborador del proyecto pero no de la DB
 const eliminarColaborador = async (req, res) => { }
-
-// Pendiente ver si se mueve a otro controlador de Tarea
-const obtenerTareas = async (req, res) => { }
 
 export {
     obtenerProyectos,
@@ -120,5 +110,4 @@ export {
     eliminarProyecto,
     agregarColaborador,
     eliminarColaborador,
-    obtenerTareas,
 }
