@@ -11,5 +11,5 @@ Permite a los usuarios:
 - marcar y desmarcar tareas finalizadas
 - todas las opciones del CRUD.
 
-El Proyecto utiliza MERN creando una REST API conectada a React.
+El Proyecto utiliza MERN creando una REST API conectada a ReactJS.
 
