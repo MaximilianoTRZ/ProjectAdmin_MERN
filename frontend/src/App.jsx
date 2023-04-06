@@ -1,12 +1,29 @@
 import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthLayout from './layouts/AuthLayout';
+import Login from './pages/Login';
+import Registrar from './pages/Registrar';
+import OlvidePassword from './pages/OlvidePassword';
+import NuevoPassword from './pages/NuevoPassword';
+import ConfirmarCuenta from './pages/ConfirmarCuenta';
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-      <h1>Project Admin</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Public Area */}
+        <Route path="/" element={<AuthLayout />}>
+          <Route index element={<Login />}/>
+          <Route path="registrar" element={<Registrar />}/>
+          <Route path="olvide-password" element={<OlvidePassword />}/>
+          <Route path="olvide-password/:token" element={<NuevoPassword />}/>
+          <Route path="confirmar/:id" element={<ConfirmarCuenta />}/>
+          
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
