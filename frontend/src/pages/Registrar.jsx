@@ -17,7 +17,7 @@ const Registrar = () => {
     
     if ([nombre, email, password, repetirPassword].includes('')) {
       setAlerta({
-        msg: "Todos los campos son obligatorios",
+        msg: "All fields are required",
         error: true
       })
       return
