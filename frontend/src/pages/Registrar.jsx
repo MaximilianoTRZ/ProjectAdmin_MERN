@@ -22,6 +22,28 @@ const Registrar = () => {
       })
       return
     }
+
+    if (password !== repetirPassword) {
+      setAlerta({
+        msg: "Passwords are not equals",
+        error: true
+      })
+      return
+    }
+
+    if (password.length < 6) {
+      setAlerta({
+        msg: "Password must be six characters al least",
+        error: true
+      })
+      return
+    }
+
+    setAlerta({})
+
+    //Create user in the API
+    console.log('Creating user...')
+
   }
 
   const { msg } = alerta
