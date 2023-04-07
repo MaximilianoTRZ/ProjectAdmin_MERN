@@ -43,16 +43,23 @@ const Registrar = () => {
 
     //Create user in the API
     try {
-      let user = {
-        "nombre": "Tomas",
-        "password": "tomas123",
-        "email": "tomas@correo.com"
-      }
-      const response = await axios.post('http://localhost:4000/api/usuarios', user)
-      console.log(response)
-      
+      const { data } = await axios.post('http://localhost:4000/api/usuarios/', {nombre, email, password})
+      setAlerta({
+        msg: data.msg,
+        error: false
+      })
+
+      //Reset Form
+      setNombre('')
+      setEmail('')
+      setPassword('')
+      setRepetirPassword('')
+
     } catch (error) {
-      console.log(error.msg)
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true
+      })
     }
 
     

@@ -31,10 +31,10 @@ const registrarUsuario = async (req, res) => {
         usuario.token = generarId() //le ponemos como token el id creado en helpers
 
         //con await esperamos/bloqueamos a que finalice el guardado del registro, porque no sabemos cuanto puede tardar.
-        const usuarioAlmacenado = await usuario.save() // save() guarda el objeto creado en mongodb
+        await usuario.save() // save() guarda el objeto creado en mongodb
 
         // respuesta del controlador (response)
-        res.json(usuarioAlmacenado)
+        res.json({ msg: "Usuario creado correctamente! Revisa tu email para confirmar la cuenta."})
 
     } catch (error) {
         console.log(error);
