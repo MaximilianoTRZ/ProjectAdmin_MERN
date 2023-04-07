@@ -23,7 +23,7 @@ dotenv.config()
 conectarDB()
 
 //Configuracion cors
-const whiteList = ['http://localhost:5173']
+const whiteList = [process.env.FRONTEND_URL]
 
 //de la doc de cors
 const corsOptions = {
