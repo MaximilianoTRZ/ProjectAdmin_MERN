@@ -1,8 +1,8 @@
 //Archivo Controlador del routing de usuarios.
-
 import Usuario from "../models/Usuario.js" //importamos el schema de usuario
 import generarId from "../helpers/generarId.js" //importamos el generador del id
 import generarJWT from "../helpers/generarJWT.js" //importamos el generador del jwt
+import { emailRegistro } from "../helpers/emails.js"
 
 // ruta raiz de usuario
 const homeUsuario =  (res,req) =>{
@@ -32,6 +32,13 @@ const registrarUsuario = async (req, res) => {
 
         //con await esperamos/bloqueamos a que finalice el guardado del registro, porque no sabemos cuanto puede tardar.
         await usuario.save() // save() guarda el objeto creado en mongodb
+
+        // Enviar email de confirmacion
+        emailRegistro({
+            email: usuario.email,
+            nombre: usuario.nombre,
+            token: usuario.token
+        });
 
         // respuesta del controlador (response)
         res.json({ msg: "Usuario creado correctamente! Revisa tu email para confirmar la cuenta."})
