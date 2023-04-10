@@ -3,7 +3,7 @@ Aplicación MERN: Administrador de Proyectos y Tareas.
 
 https://project-admin-mern-mrzdev.netlify.app/
 
-Estilo Basecamp, Asana o Trello.
+Similar a Basecamp, Asana o Trello.
 
 Permite a los usuarios:
 - crear su cuenta
